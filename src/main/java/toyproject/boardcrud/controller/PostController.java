@@ -29,7 +29,7 @@ public class PostController {
     @PostMapping("/create")
     public String create(@ModelAttribute Post post) {
         postService.save(post);
-        return "redirect:index";
+        return "redirect:/";
     }
 
     @GetMapping("/{postId}")
@@ -68,6 +68,6 @@ public class PostController {
         User loggedInUser = userService.getLoggedInUser();
         postService.deletePost(postId, loggedInUser);
 
-        return "redirect:index";
+        return "redirect:/";
     }
 }

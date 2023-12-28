@@ -1,5 +1,6 @@
 package toyproject.boardcrud.domain;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -25,6 +26,11 @@ public class User {
     @NonNull
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "postAuthor")
+    @Nullable
     private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "commentAuthor")
+    @Nullable
+    private List<Comment> commentList = new ArrayList<>();
 }

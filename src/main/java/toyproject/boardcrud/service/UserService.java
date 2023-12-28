@@ -28,12 +28,14 @@ public class UserService {
     @Transactional
     public String signin(User user) {
 
-        if (userRepository.findById(user.getId()) == null) {
+        User existingUser = userRepository.findById(user.getId()).get(0);
+
+        if (existingUser == null) {
             throw new IllegalStateException("아이디가 일치하지 않습니다.");
-        } else if (userRepository.findById(user.getId()).getPassword() != user.getPassword()) {
+        } else if (!(existingUser.getPassword().equals(user.getPassword()))) {
             throw new IllegalStateException("패스워드가 일치하지 않습니다.");
         } else {
-            httpSession.setAttribute("loggedInUser", user);
+            httpSession.setAttribute("loggedInUser", existingUser); // 왜 existingUser는 되고 user는 안되지
             return user.getName();
         }
     }
@@ -44,10 +46,13 @@ public class UserService {
 
     private void validateDuplicateMember(User user) {
 
-        User findUser = userRepository.findById(user.getId());
-        if (!(findUser == null)) {
-            throw new IllegalStateException("이미 존재하는 아이디 입니다.");
+        if (userRepository.countUsers() != 0) {
+            List<User> findUser = userRepository.findById(user.getId());
+            if (!findUser.isEmpty()) {
+                throw new IllegalStateException("이미 존재하는 회원입니다.");
+            }
         }
+
     }
 
 

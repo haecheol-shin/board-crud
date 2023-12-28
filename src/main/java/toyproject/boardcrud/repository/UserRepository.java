@@ -22,10 +22,15 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public User findById(String id) {
+    public List<User> findById(String id) {
 
         return em.createQuery("select u from User u where u.id = :userId", User.class)
                 .setParameter("userId", id)
+                .getResultList();
+    }
+
+    public long countUsers() {
+        return em.createQuery("SELECT COUNT(u) FROM User u", Long.class)
                 .getSingleResult();
     }
 
