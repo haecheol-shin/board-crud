@@ -13,9 +13,6 @@ public class BoardCrudApplication {
 
 		SpringApplication.run(BoardCrudApplication.class, args);
 
-		Path path = Paths.get("");
-		System.out.println(path.toAbsolutePath().toString());
-
 	}
 
 }
