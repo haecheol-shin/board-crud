@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2>Spring Boot 게시판</h2>
+  </div>
+
+  <div th:if="${loggedInUserName != null}">
+    <p th:text="'현재 로그인한 사용자: ' + ${loggedInUserName}"></p>
+    <button class="btn btn-primary float-first"
+            th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>
+    <button class="btn btn-primary float-first"
+            th:onclick="|location.href='@{/user/{userId}(userId=${loggedInUserId})}'|">마이페이지</button>
+
+
+  </div>
+
+  <div th:if="${loggedInUserName == null}">
+    <button th:onclick="|location.href='@{/user}'|">로그인</button>
+    <button th:onclick="|location.href='@{/user/signup}'|">회원가입</button>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end"
+              th:onclick="|location.href='@{/post/create}'|"
+              type="button">게시글 등록</button>
+    </div>
+  </div>
+  <hr class="my-4">
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>날짜</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="post : ${posts}">
+        <td><a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}">title</a></td>
+        <td th:text="${post.postAuthor}">shc</a></td>
+        <td th:text="${post.date}">0000.00.00</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+</body>
+</html>

@@ -34,6 +34,7 @@ public class IndexController {
         User loggedInUser = userService.getLoggedInUser();
         if (loggedInUser != null) {
             model.addAttribute("loggedInUserName", loggedInUser.getName());
+            model.addAttribute("loggedInUserId", loggedInUser.getId());
         }
 
         return "index";

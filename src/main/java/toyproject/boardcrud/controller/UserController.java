@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import toyproject.boardcrud.domain.User;
 import toyproject.boardcrud.service.UserService;
@@ -28,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public String login(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String login(@ModelAttribute User user, Model model) {
         userService.signin(user);
         return "redirect:/";
     }
@@ -52,5 +49,12 @@ public class UserController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/{userId}")
+    public String myPage(@PathVariable String userId, Model model) {
+        // 세션 필요
+        // 사용자가 쓴 글을 model에 넣어야 함
+        return "user/myPage";
     }
 }
