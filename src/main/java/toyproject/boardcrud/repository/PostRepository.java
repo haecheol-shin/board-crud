@@ -38,8 +38,14 @@ public class PostRepository {
                 .executeUpdate();
     }
 
+    public List<Post> findPostsByAuthor(User author) {
+        return em.createQuery("SELECT p FROM Post p WHERE p.author = :author", Post.class)
+                .setParameter("author", author)
+                .getResultList();
+    }
+
     public Post findPostByIdAndAuthor(Long id, User author) {
-        return em.createQuery("SELECT p FROM Post p WHERE p.id = :postId AND p.author = :author", Post.class)
+        return em.createQuery("SELECT p FROM Post p WHERE p.id = :postId AND p.postAuthor = :author", Post.class)
                 .setParameter("postId", id)
                 .setParameter("author", author)
                 .getResultList()

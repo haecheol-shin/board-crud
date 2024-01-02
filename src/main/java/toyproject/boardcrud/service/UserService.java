@@ -28,7 +28,7 @@ public class UserService {
     @Transactional
     public String signin(User user) {
 
-        User existingUser = userRepository.findById(user.getId()).get(0);
+        User existingUser = userRepository.findById(user.getId());
 
         if (existingUser == null) {
             throw new IllegalStateException("아이디가 일치하지 않습니다.");
@@ -47,12 +47,16 @@ public class UserService {
     private void validateDuplicateMember(User user) {
 
         if (userRepository.countUsers() != 0) {
-            List<User> findUser = userRepository.findById(user.getId());
-            if (!findUser.isEmpty()) {
+            User findUser = userRepository.findById(user.getId());
+            if (findUser != null) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
         }
 
+    }
+
+    public User findById(String userId) {
+        return userRepository.findById(userId);
     }
 
 

@@ -44,4 +44,9 @@ public class PostService {
         originalPost.setTitle(updatePost.getTitle());
         originalPost.setContent(updatePost.getContent());
     }
+
+    @Transactional
+    public List<Post> findPostsByAuthor(User author) {
+        return postRepository.findPostsByAuthor(author);
+    }
 }

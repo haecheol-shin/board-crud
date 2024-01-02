@@ -8,8 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import toyproject.boardcrud.domain.Post;
 import toyproject.boardcrud.domain.User;
+import toyproject.boardcrud.service.PostService;
 import toyproject.boardcrud.service.UserService;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -18,6 +22,7 @@ import toyproject.boardcrud.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final PostService postService;
 
     @GetMapping()
     public String loginForm() {
@@ -53,8 +58,10 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public String myPage(@PathVariable String userId, Model model) {
-        // 세션 필요
-        // 사용자가 쓴 글을 model에 넣어야 함
+
+        User author = userService.findById(userId);
+        List<Post> posts = postService.findPostsByAuthor(author);
+        model.addAttribute("posts", posts);
         return "user/myPage";
     }
 }
