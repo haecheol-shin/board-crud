@@ -25,7 +25,8 @@ public class PostService {
     }
 
     @Transactional
-    public void save(Post post) {
+    public void save(Post post, User author) {
+        post.setPostAuthor(author);
         postRepository.save(post);
     }
 

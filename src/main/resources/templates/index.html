@@ -47,7 +47,7 @@
             <tbody>
             <tr th:each="post : ${posts}">
                 <td><a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}">title</a></td>
-                <td th:text="${post.postAuthor}">shc</a></td>
+                <td th:text="${post.postAuthor != null ? post.postAuthor.id : '익명'}">shc</td>
                 <td th:text="${post.date}">0000.00.00</td>
             </tr>
             </tbody>

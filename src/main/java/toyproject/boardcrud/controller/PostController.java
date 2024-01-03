@@ -28,7 +28,9 @@ public class PostController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute Post post) {
-        postService.save(post);
+        // 여기서 세션에서 현재 사용자의 name을 가져와서 save를 호출할때 name을 같이 넘기도록 해야할듯.
+        User author = userService.getLoggedInUser();
+        postService.save(post, author);
         return "redirect:/";
     }
 

@@ -23,7 +23,7 @@ public class PostRepository {
                 .getResultList();
     }
 
-    public void save(Post post) {
+    public void save(Post post) { // 여기서 post의 postAuthor를 자동으로 등록해줘야 한다.
         if (post.getId() == null) {
             em.persist(post);
         } else {
@@ -32,14 +32,14 @@ public class PostRepository {
     }
 
     public void deletePost(Long id, User author) {
-        em.createQuery("DELETE FROM Post p WHERE p.id = :postId AND p.author = :author")
+        em.createQuery("DELETE FROM Post p WHERE p.id = :postId AND p.postAuthor = :author")
                 .setParameter("postId", id)
                 .setParameter("author", author)
                 .executeUpdate();
     }
 
     public List<Post> findPostsByAuthor(User author) {
-        return em.createQuery("SELECT p FROM Post p WHERE p.author = :author", Post.class)
+        return em.createQuery("SELECT p FROM Post p WHERE p.postAuthor = :author", Post.class)
                 .setParameter("author", author)
                 .getResultList();
     }
