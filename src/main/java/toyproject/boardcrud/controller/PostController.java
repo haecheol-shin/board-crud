@@ -65,7 +65,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/{postId}/delete")
+    @GetMapping("/{postId}/delete")
     public String delete(@PathVariable Long postId) {
         User loggedInUser = userService.getLoggedInUser();
         postService.deletePost(postId, loggedInUser);

@@ -42,13 +42,17 @@
         <th>제목</th>
         <th>글쓴이</th>
         <th>날짜</th>
+        <th>삭제</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="post : ${posts}">
         <td><a th:href="@{/post/{postId}(postId=${post.id})}" th:text="${post.title}">title</a></td>
-        <td th:text="${post.postAuthor}">shc</a></td>
+        <td th:text="${post.postAuthor.id}">shc</a></td>
         <td th:text="${post.date}">0000.00.00</td>
+        <td><button class="btn btn-danger"
+                    th:onclick="|location.href='@{/post/{postId}/delete(postId=${post.id})}'|"
+                    type="button">X</button></td>
       </tr>
       </tbody>
     </table>
