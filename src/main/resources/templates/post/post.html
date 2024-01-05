@@ -8,11 +8,20 @@
  .container {
  max-width: 560px;
  }
+
+ a {
+  text-decoration-line: none;
+}
+
+#content {
+  height: 300px;
+}
+
  </style></head>
 <body>
 <div class="container">
   <div class="py-5 text-center">
-    <h2>상품 상세</h2>
+    <h2><a th:href="@{/}">Spring Boot 게시판</a></h2>
   </div>
 
   <h2 th:if="${param.status}" th:text="저장완료"></h2>
@@ -20,8 +29,9 @@
   <div>
     <label for="title">제목</label>
     <input type="text" id="title" name="title" class="form-control"
-           th:value="${post.title}" readonly>
+           th:value="${post.title}" th:style="'line-height: 0;'" readonly>
   </div>
+  <p></p>
   <div>
     <label for="content">내용</label>
     <input type="text" id="content" name="content" class="form-control"

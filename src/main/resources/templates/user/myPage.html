@@ -5,11 +5,16 @@
   <link th:href="@{/css/bootstrap.min.css}"
         href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+ a {
+  text-decoration-line: none;
+}
+ </style>
 <body>
 
 <div class="container" style="max-width: 600px">
   <div class="py-5 text-center">
-    <h2>Spring Boot 게시판</h2>
+    <h2><a th:href="@{/}">Spring Boot 게시판</a></h2>
   </div>
 
   <div th:if="${loggedInUserName != null}">

@@ -21,6 +21,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private HttpSession httpSession;
+
     private final UserService userService;
     private final PostService postService;
 
@@ -62,6 +64,13 @@ public class UserController {
         User author = userService.findById(userId);
         List<Post> posts = postService.findPostsByAuthor(author);
         model.addAttribute("posts", posts);
+
+        User loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser != null) {
+            model.addAttribute("loggedInUserName", loggedInUser.getName());
+            model.addAttribute("loggedInUserId", loggedInUser.getId());
+        }
+
         return "user/myPage";
     }
 }
