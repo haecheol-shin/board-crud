@@ -44,6 +44,7 @@ public class PostService {
     public void update(Post originalPost, Post updatePost) {
         originalPost.setTitle(updatePost.getTitle());
         originalPost.setContent(updatePost.getContent());
+        postRepository.save(originalPost);
     }
 
     @Transactional

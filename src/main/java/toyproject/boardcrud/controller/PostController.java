@@ -45,6 +45,12 @@ public class PostController {
     public String editForm(@PathVariable Long postId, Model model) {
         User loggedInUser = userService.getLoggedInUser();
         Post originalPost = postService.findUpdatePost(postId, loggedInUser);
+
+        if (loggedInUser == null) {
+            // 게시글이 없거나 권한이 없는 경우에 대한 처리
+            throw new RuntimeException("권한이 없습니다!");
+        }
+
         model.addAttribute("post", originalPost);
         return "post/editForm";
     }
@@ -54,15 +60,10 @@ public class PostController {
         User loggedInUser = userService.getLoggedInUser();
         Post originalPost = postService.findUpdatePost(postId, loggedInUser);
 
-        if (originalPost != null) {
-            postService.update(originalPost, updatePost);
-            redirectAttributes.addAttribute("postId", postId);
-            return "redirect:/post/{postId}";
+        postService.update(originalPost, updatePost);
+        redirectAttributes.addAttribute("postId", postId);
+        return "redirect:/post/{postId}";
 
-        } else {
-            // 게시글이 없거나 권한이 없는 경우에 대한 처리
-            throw new RuntimeException("권한이 없습니다!");
-        }
     }
 
     @GetMapping("/{postId}/delete")
