@@ -52,6 +52,17 @@
               type="button">목록으로</button>
     </div>
   </div>
+
+  <hr class="my-4">
+
+<!--   댓글 자리-->
+  <div class="row">
+    <div th:each="comment : ${comments}">
+      <label for="title" th:value="${comment.commentAuthor}">댓글</label>
+      <input type="text" id="comment" name="comment" class="form-control"
+             th:value="${comment.content}" readonly>
+    </div>
+  </div>
 </div> <!-- /container -->
 </body>
 </html>

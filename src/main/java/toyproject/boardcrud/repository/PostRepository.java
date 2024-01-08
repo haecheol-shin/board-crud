@@ -23,7 +23,7 @@ public class PostRepository {
                 .getResultList();
     }
 
-    public void save(Post post) { // 여기서 post의 postAuthor를 자동으로 등록해줘야 한다.
+    public void save(Post post) {
         if (post.getId() == null) {
             em.persist(post);
         } else {
