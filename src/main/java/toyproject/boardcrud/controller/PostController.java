@@ -6,11 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import toyproject.boardcrud.domain.Comment;
 import toyproject.boardcrud.domain.Post;
 import toyproject.boardcrud.domain.User;
 import toyproject.boardcrud.repository.PostRepository;
+import toyproject.boardcrud.service.CommentService;
 import toyproject.boardcrud.service.PostService;
 import toyproject.boardcrud.service.UserService;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -20,6 +24,7 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final CommentService commentService;
 
     @GetMapping("/create")
     public String createForm() {
@@ -28,7 +33,6 @@ public class PostController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute Post post) {
-        // 여기서 세션에서 현재 사용자의 name을 가져와서 save를 호출할때 name을 같이 넘기도록 해야할듯.
         User author = userService.getLoggedInUser();
         postService.save(post, author);
         return "redirect:/";
@@ -38,6 +42,11 @@ public class PostController {
     public String post(@PathVariable Long postId, Model model) {
         Post post = postService.findPost(postId);
         model.addAttribute("post", post);
+
+        // 해당 post의 댓글 띄우는 기능
+        List<Comment> comments = commentService.findComments(postId);
+        model.addAttribute("comments", comments);
+
         return "post/post";
     }
 
@@ -73,4 +82,6 @@ public class PostController {
 
         return "redirect:/";
     }
+
+
 }
