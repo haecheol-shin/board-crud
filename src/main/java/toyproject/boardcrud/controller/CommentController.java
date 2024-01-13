@@ -22,8 +22,10 @@ public class CommentController {
 
     // 댓글 저장하기
     @PostMapping("/save")
-    public String commentCreate(@ModelAttribute Comment comment) {
+    public String commentCreate(@ModelAttribute("comment") Comment comment, @PathVariable Long postId) {
         User author = userService.getLoggedInUser();
+
+        // postid를 가져와서 save할때 넣어줘야 한다.
         commentService.save(comment, author);
         return "redirect:/";
     }

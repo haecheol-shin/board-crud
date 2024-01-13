@@ -22,13 +22,13 @@ public class CommentService {
     @Transactional
     public List<Comment> findComments(Long postId) {
         Post post = postRepository.findOne(postId);
-
         return commentRepository.findComments(post);
     }
 
     @Transactional
-    public void save(Comment comment, User author) {
+    public void save(Comment comment, User author, Post post) {
         comment.setCommentAuthor(author);
+        comment.setPost(post);
         commentRepository.save(comment);
     }
 
