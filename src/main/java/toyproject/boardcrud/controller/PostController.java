@@ -46,7 +46,6 @@ public class PostController {
         // 해당 post의 댓글 띄우는 기능
         List<Comment> comments = commentService.findComments(postId);
         model.addAttribute("comments", comments);
-        System.out.println("comments = " + comments);
 
         return "post/post";
     }

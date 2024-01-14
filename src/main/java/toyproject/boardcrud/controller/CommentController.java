@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import toyproject.boardcrud.domain.Comment;
+import toyproject.boardcrud.domain.Post;
 import toyproject.boardcrud.domain.User;
 import toyproject.boardcrud.service.CommentService;
+import toyproject.boardcrud.service.PostService;
 import toyproject.boardcrud.service.UserService;
 
 @Slf4j
@@ -17,16 +19,17 @@ public class CommentController {
 
     private final CommentService commentService;
     private final UserService userService;
+    private final PostService postService;
 
     // post에 달린 댓글들 불러오기(PostController에 있어야 할 수도)
 
     // 댓글 저장하기
-    @PostMapping("/save")
+    @PostMapping("/save/{postId}")
     public String commentCreate(@ModelAttribute("comment") Comment comment, @PathVariable Long postId) {
         User author = userService.getLoggedInUser();
-
+        Post post = postService.findPost(postId);
         // postid를 가져와서 save할때 넣어줘야 한다.
-        commentService.save(comment, author);
+        commentService.save(comment, author, post);
         return "redirect:/";
     }
 
