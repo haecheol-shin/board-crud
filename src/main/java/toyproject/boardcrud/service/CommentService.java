@@ -26,6 +26,11 @@ public class CommentService {
     }
 
     @Transactional
+    public List<Comment> findUserComments(User author) {
+        return commentRepository.findByCommentAuthor(author);
+    }
+
+    @Transactional
     public void save(Comment comment, User author, Post post) {
         comment.setCommentAuthor(author);
         comment.setPost(post);

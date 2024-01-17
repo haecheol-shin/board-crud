@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import toyproject.boardcrud.domain.Comment;
 import toyproject.boardcrud.domain.Post;
 import toyproject.boardcrud.domain.User;
+import toyproject.boardcrud.service.CommentService;
 import toyproject.boardcrud.service.PostService;
 import toyproject.boardcrud.service.UserService;
 
@@ -25,6 +27,7 @@ public class UserController {
 
     private final UserService userService;
     private final PostService postService;
+    private final CommentService commentService;
 
     @GetMapping()
     public String loginForm() {
@@ -72,5 +75,26 @@ public class UserController {
         }
 
         return "user/myPage";
+    }
+
+    @GetMapping("/{userId}/comments")
+    public String myComments(@PathVariable String userId, Model model) {
+        // userId로 사용자를 찾고
+        User author = userService.findById(userId);
+
+        // 사용자가 작성한 댓글을 찾고
+        List<Comment> comments = commentService.findUserComments(author);
+
+        // 모델에 저장해서
+        model.addAttribute("comments", comments);
+
+        User loggedInUser = userService.getLoggedInUser();
+        if (loggedInUser != null) {
+            model.addAttribute("loggedInUserName", loggedInUser.getName());
+            model.addAttribute("loggedInUserId", loggedInUser.getId());
+        }
+
+        // 넘겨준다
+        return "user/myComments";
     }
 }

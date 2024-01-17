@@ -19,12 +19,13 @@
 
   <div th:if="${loggedInUserName != null}">
     <p th:text="'현재 로그인한 사용자: ' + ${loggedInUserName}"></p>
+
     <button class="btn btn-primary float-first"
             th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>
     <button class="btn btn-primary float-first"
             th:onclick="|location.href='@{/user/{userId}(userId=${loggedInUserId})}'|">마이페이지</button>
-
-
+    <button class="btn btn-primary float-first"
+            th:onclick="|location.href='@{/user/{userId}/comments(userId=${loggedInUserId})}'|">내가 쓴 댓글</button>
   </div>
 
   <div th:if="${loggedInUserName == null}">

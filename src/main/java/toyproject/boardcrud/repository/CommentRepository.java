@@ -26,6 +26,12 @@ public class CommentRepository {
                 .getResultList();
     }
 
+    public List<Comment> findByCommentAuthor(User author) {
+        return em.createQuery("SELECT c FROM Comment c WHERE c.commentAuthor = :author ", Comment.class)
+                .setParameter("author", author)
+                .getResultList();
+    }
+
     public void save(Comment comment) {
 
         em.persist(comment);

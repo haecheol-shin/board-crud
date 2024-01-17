@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+ a {
+  text-decoration-line: none;
+}
+ </style>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2><a th:href="@{/}">Spring Boot 게시판</a></h2>
+    </div>
+
+    <div th:if="${loggedInUserName != null}">
+        <p th:text="'현재 로그인한 사용자: ' + ${loggedInUserName}"></p>
+
+        <button class="btn btn-primary float-first"
+                th:onclick="|location.href='@{/user/logout}'|">로그아웃</button>
+        <button class="btn btn-primary float-first"
+                th:onclick="|location.href='@{/user/{userId}(userId=${loggedInUserId})}'|">마이페이지</button>
+        <button class="btn btn-primary float-first"
+                th:onclick="|location.href='@{/user/{userId}/comments(userId=${loggedInUserId})}'|">내가 쓴 댓글</button>
+    </div>
+
+    <div th:if="${loggedInUserName == null}">
+        <button th:onclick="|location.href='@{/user}'|">로그인</button>
+        <button th:onclick="|location.href='@{/user/signup}'|">회원가입</button>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    th:onclick="|location.href='@{/post/create}'|"
+                    type="button">게시글 등록</button>
+        </div>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>게시글 번호</th>
+                <th>댓글 내용</th>
+                <th>날짜</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td><a th:href="@{/post/{postId}(postId=${comment.post.id})}" th:text="${comment.post.id}">100</a></td>
+                <td th:text="${comment.content}">content</a></td>
+                <td th:text="${comment.date}">0000.00.00</td>
+                <td><button class="btn btn-danger"
+                            th:onclick="|location.href='@{/comment/delete/{commentId}(commentId=${comment.id})}'|"
+                            type="button">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
